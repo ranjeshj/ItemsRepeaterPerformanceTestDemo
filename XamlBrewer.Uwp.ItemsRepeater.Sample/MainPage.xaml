@@ -39,6 +39,7 @@
                               Grid.Row="1">
                     <controls:ItemsRepeater ItemsSource="{x:Bind Movies}"
                                             ItemTemplate="{StaticResource MovieTemplate}"
+                                            HorizontalCacheLength="1"
                                             Layout="{StaticResource HorizontalStackLayout}" />
                 </ScrollViewer>
             </Grid>
@@ -57,6 +58,7 @@
                     CornerRadius="0">
                 <StackPanel>
                     <ctl:ImageEx Source="{x:Bind PosterUrl}"
+                       x:Phase="1"
                        PointerEntered="Element_PointerEntered"
                        PointerExited="Element_PointerExited"
                        Height="360"
@@ -130,6 +132,7 @@
             <controls:ItemsRepeater x:Name="GenreRepeater"
                                     ItemTemplate="{StaticResource GenreTemplate}"
                                     Layout="{StaticResource VerticalStackLayout}"
+                                    VerticalCacheLength="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch" />
         </ScrollViewer>
