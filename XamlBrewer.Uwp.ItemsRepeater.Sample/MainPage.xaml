@@ -14,6 +14,10 @@
             <Setter Property="BorderBrush"
                     Value="#DB202C" />
         </Style>
+
+        <controls:StackLayout x:Key="HorizontalStackLayout"
+                              Orientation="Horizontal" />
+        
         <DataTemplate x:Key="GenreTemplate"
                       x:DataType="local:Genre">
             <Grid>
@@ -40,20 +44,17 @@
                     <controls:ItemsRepeater ItemsSource="{x:Bind Movies}"
                                             ItemTemplate="{StaticResource MovieTemplate}"
                                             HorizontalCacheLength="1"
-                                            Layout="{StaticResource HorizontalStackLayout}" />
+                                            Layout="{StaticResource HorizontalStackLayout}" 
+                                            />
                 </ScrollViewer>
             </Grid>
         </DataTemplate>
-        <controls:StackLayout x:Key="VerticalStackLayout"
-                              Orientation="Vertical"
-                              Spacing="0" />
+        
         <DataTemplate x:Key="MovieTemplate"
                       x:DataType="local:Movie">
             <Button Click="Movie_Click"
                     Width="250"
                     DataContext="{x:Bind}"
-                    BorderThickness="0"
-                    Padding="0"
                     Margin="20 0"
                     CornerRadius="0">
                 <StackPanel>
@@ -69,13 +70,12 @@
                        PlaceholderStretch="Uniform"
                        ToolTipService.ToolTip="{x:Bind Title}">
                     </ctl:ImageEx>
-                    <TextBlock Foreground="White" Text="{x:Bind Title}" FontSize="20"/>
-                    <TextBlock Foreground="White" Text="{x:Bind Title}" FontSize="24"/>
+                    <TextBlock Foreground="White" x:Phase="1" Text="{x:Bind Title}" FontSize="20"/>
+                    <TextBlock Foreground="White" x:Phase="1" Text="{x:Bind Title}" FontSize="24"/>
                 </StackPanel>
             </Button>
         </DataTemplate>
-        <controls:StackLayout x:Key="HorizontalStackLayout"
-                              Orientation="Horizontal" />
+
         <controls:CommandBarFlyout x:Name="MovieCommands"
                                    Placement="Right">
             <AppBarButton Label="Play"
@@ -97,7 +97,6 @@
                               Click="Element_Click" />
             </controls:CommandBarFlyout.SecondaryCommands>
         </controls:CommandBarFlyout>
-
     </Page.Resources>
     <Page.Background>
         <AcrylicBrush BackgroundSource="HostBackdrop"
@@ -131,10 +130,9 @@
                       Grid.Row="2">
             <controls:ItemsRepeater x:Name="GenreRepeater"
                                     ItemTemplate="{StaticResource GenreTemplate}"
-                                    Layout="{StaticResource VerticalStackLayout}"
-                                    VerticalCacheLength="1"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch" />
+                                    VerticalCacheLength="0"
+                                    KeyDown="ItemsRepeater_KeyDown"
+                                    />
         </ScrollViewer>
 
         <ContentControl x:Name="FakeTarget"

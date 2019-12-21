@@ -12,6 +12,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Controls;
 
 namespace XamlBrewer.Uwp.ItemsRepeater.Sample
 {
@@ -149,6 +150,35 @@ namespace XamlBrewer.Uwp.ItemsRepeater.Sample
             CreateOrUpdateSpringAnimation(1.0f);
 
             (sender as UIElement).StartAnimation(_springAnimation);
+        }
+
+        private void ItemsRepeater_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            // Just a sample to show the idea - will need to account for key up
+            // and also finding the correct item to put focus on.
+
+            // find the next genre below and set focus.
+            if(e.Key == Windows.System.VirtualKey.Down)
+            {
+                var current = e.OriginalSource as FrameworkElement;
+                while( current.Parent != null && current.Parent != sender)
+                {
+                    current = (FrameworkElement)current.Parent;
+                }
+
+                var repeater = sender as Microsoft.UI.Xaml.Controls.ItemsRepeater;
+                var index = repeater.GetElementIndex(current);
+
+                if(index < repeater.ItemsSourceView.Count -1)
+                {
+                    var element = repeater.GetOrCreateElement(index + 1);
+
+                    // You likely want to find a better one than the first focusible element.
+                    var focusible = FocusManager.FindFirstFocusableElement(element) as Control;
+                    focusible.Focus(FocusState.Keyboard);
+                    e.Handled = true; // Dont bubble up so XYFocus logic does not try to handle this key press.
+                }
+            }
         }
     }
 }

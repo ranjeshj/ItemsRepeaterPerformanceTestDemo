@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/XamlBrewer.Uwp.ItemsRepeater.Sample/v16
+/XamlBrewer.Uwp.ItemsRepeater.Sample/bin/x86/Debug
+/XamlBrewer.Uwp.ItemsRepeater.Sample/obj
